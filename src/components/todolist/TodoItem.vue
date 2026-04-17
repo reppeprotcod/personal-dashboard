@@ -1,11 +1,11 @@
 <script setup>
 import { ref } from "vue";
 
-const props = defineProps(["text", "isCompleted", "id"]);
-const emit = defineEmits(["removeTodo", "editTodo"]);
+const props = defineProps(["text", "isCompleted", "id", "isEditing"]);
+const emit = defineEmits(["removeTodo", "editTodo", "setEditing"]);
 
 const status = ref(props.isCompleted);
-const isEditing = ref(false);
+//const isEditing = ref(false);
 const currentValue = ref(props.text);
 
 const onRemove = () => {
@@ -13,22 +13,24 @@ const onRemove = () => {
 };
 const onEdit = async () => {
   currentValue.value = props.text;
-  isEditing.value = true;
+  emit("setEditing", props.id);
+  //isEditing.value = true;
 };
 const onSave = () => {
   if (currentValue.value && currentValue.value.trim().length > 0) {
     emit("editTodo", props.id, currentValue.value);
-    isEditing.value = false;
+    emit("setEditing", null);
+    //isEditing.value = false;
   }
 };
 </script>
 <template>
   <div class="todoItem">
     <input type="checkbox" v-model="status" :checked="status" />
-    <p v-if="!isEditing" :class="{ complete: status }">
+    <p v-if="!props.isEditing" :class="{ complete: status }">
       {{ props.text }}
     </p>
-    <form v-else-if="isEditing" @submit.prevent="onSave">
+    <form v-else-if="props.isEditing" @submit.prevent="onSave">
       <input
         name="editInput"
         id="editInput"
@@ -39,7 +41,7 @@ const onSave = () => {
       <button type="submit">Save</button>
     </form>
     <button type="button" @click="onRemove">Remove</button>
-    <button v-show="!isEditing" type="button" @click="onEdit">Edit</button>
+    <button v-show="!props.isEditing" type="button" @click="onEdit">Edit</button>
   </div>
 </template>
 

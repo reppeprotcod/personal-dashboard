@@ -11,11 +11,11 @@ const items = ref([
   { id: 5, text: "something12345", isCompleted: false },
 ]);
 let id = 6;
-const isEdit = ref(false);
+const editingId = ref(null);
+
 const onAdd = (input) => {
   items.value.push({ id: id++, text: input, isCompleted: false });
 };
-
 const onRemove = (id) => {
   items.value = items.value.filter((item) => item.id !== id);
 };
@@ -23,6 +23,9 @@ const onEdit = (id, text) => {
   const elem = items.value.find((item) => item.id === id);
   elem.text = text;
 };
+const setEditingId = (id) => {
+  editingId.value = id;
+}
 </script>
 
 <template>
@@ -35,8 +38,10 @@ const onEdit = (id, text) => {
           :text="item.text"
           :isCompleted="item.isCompleted"
           :id="item.id"
+          :isEditing="item.id === editingId"
           @removeTodo="onRemove"
           @editTodo="onEdit"
+          @setEditing="setEditingId"
         />
       </li>
     </ul>

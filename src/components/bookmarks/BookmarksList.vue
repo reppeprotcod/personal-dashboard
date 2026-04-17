@@ -21,6 +21,7 @@ const bookmarks = ref([
   },
 ]);
 let id = 4;
+const editingId = ref(null);
 
 const onAdd = (url, title) => {
   bookmarks.value.push({ id: id++, url: url, title: title });
@@ -33,6 +34,9 @@ const onEdit = (id, url, title) => {
   elem.url = url;
   elem.title = title;
 };
+const setEditingId = (id) => {
+  editingId.value = id;
+}
 </script>
 
 <template>
@@ -44,8 +48,10 @@ const onEdit = (id, url, title) => {
           :id="bookmark.id"
           :url="bookmark.url"
           :title="bookmark.title"
+          :isEditing="bookmark.id === editingId"
           @removeBookmark="onRemove"
           @editBookmark="onEdit"
+          @setEditing="setEditingId"
         />
       </li>
     </ul>

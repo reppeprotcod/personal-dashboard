@@ -11,6 +11,7 @@ const notes = ref([
   { id: 5, text: "something12345" },
 ]);
 let id = 6;
+const editingId = ref(null);
 
 const onAdd = (input) => {
   notes.value.push({ id: id++, text: input });
@@ -22,6 +23,9 @@ const onEdit = (id, text) => {
   const elem = notes.value.find((note) => note.id === id);
   elem.text = text;
 };
+const setEditingId = (id) => {
+  editingId.value = id;
+}
 </script>
 
 <template>
@@ -32,8 +36,10 @@ const onEdit = (id, text) => {
         <NoteItem
           :text="note.text"
           :id="note.id"
+          :isEditing="note.id === editingId"
           @removeNote="onRemove"
           @editNote="onEdit"
+          @setEditing="setEditingId"
         />
       </li>
     </ul>
