@@ -15,17 +15,14 @@ const onEdit = () => {
   isEditing.value = true;
 };
 const onSave = () => {
-  const title =
-    currentTitleValue.value && currentTitleValue.value.trim().length > 0
-      ? currentTitleValue.value
-      : currentUrlValue.value;
-  emit(
-    "editBookmark",
-    props.id,
-    currentUrlValue.value,
-    title
-  );
-  isEditing.value = false;
+  if (currentUrlValue.value && currentUrlValue.value.trim().length > 0) {
+    const title =
+      currentTitleValue.value && currentTitleValue.value.trim().length > 0
+        ? currentTitleValue.value
+        : currentUrlValue.value;
+    emit("editBookmark", props.id, currentUrlValue.value, title);
+    isEditing.value = false;
+  }
 };
 </script>
 
@@ -39,7 +36,12 @@ const onSave = () => {
       </div>
       <div>
         <label for="inputUrlTitle">Title</label>
-        <input v-model="currentTitleValue" type="text" id="inputUrlTitle" />
+        <input
+          v-focus
+          v-model="currentTitleValue"
+          type="text"
+          id="inputUrlTitle"
+        />
       </div>
       <button type="submit">Save</button>
     </form>

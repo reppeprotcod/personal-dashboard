@@ -13,8 +13,10 @@ const onEdit = () => {
   isEditing.value = true;
 };
 const onSave = () => {
-  emit("editNote", props.id, currentValue.value);
-  isEditing.value = false;
+  if (currentValue.value && currentValue.value.trim().length > 0) {
+    emit("editNote", props.id, currentValue.value);
+    isEditing.value = false;
+  }
 };
 </script>
 
