@@ -10,9 +10,9 @@ const items = ref([
   { id: 4, text: "something1234", isCompleted: false },
   { id: 5, text: "something12345", isCompleted: false },
 ]);
-let id = 5;
+let id = 6;
 const isEdit = ref(false);
-const addTodo = (input) => {
+const onAdd = (input) => {
   items.value.push({ id: id++, text: input, isCompleted: false });
 };
 
@@ -27,7 +27,7 @@ const onEdit = (id, text) => {
 
 <template>
   <div>
-    <AddTodo @addTodo="addTodo" />
+    <AddTodo @addTodo="onAdd" />
 
     <ul>
       <li v-for="item in items" :key="item.id">

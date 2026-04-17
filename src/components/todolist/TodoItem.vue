@@ -1,5 +1,5 @@
 <script setup>
-import { nextTick, ref } from "vue";
+import { ref } from "vue";
 
 const props = defineProps(["text", "isCompleted", "id"]);
 const emit = defineEmits(["removeTodo", "editTodo"]);
@@ -7,7 +7,6 @@ const emit = defineEmits(["removeTodo", "editTodo"]);
 const status = ref(props.isCompleted);
 const isEditing = ref(false);
 const currentValue = ref(props.text);
-const editInput = ref(null);
 
 const onRemove = () => {
   emit("removeTodo", props.id);
