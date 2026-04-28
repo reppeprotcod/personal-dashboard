@@ -5,7 +5,6 @@ const props = defineProps(["text", "isCompleted", "id", "isEditing"]);
 const emit = defineEmits(["removeTodo", "editTodo", "setEditing"]);
 
 const status = ref(props.isCompleted);
-//const isEditing = ref(false);
 const currentValue = ref(props.text);
 
 const onRemove = () => {
@@ -14,13 +13,11 @@ const onRemove = () => {
 const onEdit = async () => {
   currentValue.value = props.text;
   emit("setEditing", props.id);
-  //isEditing.value = true;
 };
 const onSave = () => {
   if (currentValue.value && currentValue.value.trim().length > 0) {
     emit("editTodo", props.id, currentValue.value);
     emit("setEditing", null);
-    //isEditing.value = false;
   }
 };
 </script>
